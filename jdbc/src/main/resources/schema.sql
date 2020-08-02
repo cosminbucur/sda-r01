@@ -1,3 +1,5 @@
+CREATE SCHEMA `jdbc_tutorial` ;
+
 CREATE TABLE `jdbc_tutorial`.`new_table` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
