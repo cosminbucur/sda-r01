@@ -5,7 +5,7 @@ import java.util.logging.Logger;
 
 public class PreparedStatements {
 
-    // CRUD
+    // TODO: extract constants in a yml properties file
     private static final Logger logger = Logger.getLogger(PreparedStatement.class.getName());
     private static final String URL = "jdbc:mysql://localhost:3306/jdbc_tutorial?serverTimezone=UTC";
     private static final String USER = "root";
@@ -15,15 +15,14 @@ public class PreparedStatements {
     public void insertOperation(String name, String email, String country) {
         String sql = "INSERT INTO user(name, email, country) VALUES (?, ?, ?)";
 
-        // try with resources
-        try (
-                Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-                PreparedStatement preparedStatement = connection.prepareStatement(sql)
-        ) {
-            // set parameters to sql prepared statement
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, email);
             preparedStatement.setString(3, country);
+            logger.info("statement created " + preparedStatement);
+            int result = preparedStatement.executeUpdate();
+            logger.info("Insert return: " + (result == 1 ? "OK" : "ERROR"));
         } catch (SQLException e) {
             logger.severe("failed to insert");
         }
@@ -33,12 +32,10 @@ public class PreparedStatements {
     public void queryOperation() {
         String sql = "SELECT * FROM user";
 
-        // try with resources
-        try (
-                Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
-                PreparedStatement preparedStatement = connection.prepareStatement(sql);
-                ResultSet rs = preparedStatement.executeQuery()
-        ) {
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql);
+             ResultSet rs = preparedStatement.executeQuery()) {
+            logger.info("statement created " + preparedStatement);
 
             while (rs.next()) {
                 // save properties from results set
@@ -54,8 +51,35 @@ public class PreparedStatements {
     }
 
     // update
-    // TODO: implement this
+    public void updateOperation(int id, String name, String email, String country) {
+        String sql = "UPDATE user SET name = ?, email = ?, country = ? WHERE id = " + id;
+
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, email);
+            preparedStatement.setString(3, country);
+            logger.info("statement created " + preparedStatement);
+            int result = preparedStatement.executeUpdate();
+            logger.info("Update return: " + (result == 1 ? "OK" : "ERROR"));
+        } catch (SQLException e) {
+            logger.severe("failed to insert");
+        }
+    }
+
 
     // delete
-    // TODO: implement this
+    public void deleteOperation(int id) {
+        String sql = "DELETE FROM user WHERE id = ?";
+
+        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+            preparedStatement.setInt(1, id);
+            logger.info("statement created " + preparedStatement);
+            int result = preparedStatement.executeUpdate();
+            logger.info("Delete return: " + (result == 1 ? "OK" : "ERROR"));
+        } catch (SQLException e) {
+            logger.severe("failed to insert");
+        }
+    }
 }

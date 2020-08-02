@@ -23,7 +23,7 @@ public class Statements {
             Statement statement = connection.createStatement();
             logger.info("statement created" + statement);
 
-            String insertUserSql = "INSERT user(name, email, country) VALUES"
+            String insertUserSql = "INSERT INTO user(name, email, country) VALUES"
                     + "('" + name + "','" + email + "','" + country + "')";
             logger.info("execute update: " + insertUserSql);
 
@@ -40,88 +40,81 @@ public class Statements {
         }
     }
 
-    // read all from users
-    public void findAllUser() {
-        // connection
-        Connection connection = null;
-
+    // select - query
+    public void queryOperation() {
         try {
-            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            // create connection
+            Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            logger.info("connection created" + connection);
+
             // create statement
             Statement statement = connection.createStatement();
+            logger.info("statement created" + statement);
+
+            String selectUsersSql = "SELECT id, name, email, country FROM user";
+            logger.info("execute select: " + selectUsersSql);
 
             // execute
-            String sql = "SELECT * FROM user";
+            ResultSet rs = statement.executeQuery(selectUsersSql);
 
-            // result set
-            ResultSet rs = statement.executeQuery(sql);
-
-            // iterate result set and extract data
+            // iterate result set
             while (rs.next()) {
+                // save properties from results set
                 int id = rs.getInt("id");
                 String name = rs.getString("name");
                 String email = rs.getString("email");
                 String country = rs.getString("country");
                 logger.info(id + ", " + name + ", " + email + ", " + country);
-
-                // create user in memory
-                User user = new User();
-                user.setEmail(email);
             }
 
-            // close
+            // close connection
             connection.close();
+            logger.info("connection closed");
         } catch (SQLException e) {
-            logger.severe("failed to read from db");
+            logger.severe("failed to query");
         }
-
-
     }
 
-    // update
     public void updateOperation(int id, String name, String email, String country) {
-        Statement statement = null;
         Connection connection = null;
+        Statement statement = null;
         try {
             connection = DriverManager.getConnection(URL, USER, PASSWORD);
             statement = connection.createStatement();
             statement.executeUpdate("UPDATE user SET name = '" + name + "', " +
                     "email = '" + email + "', country = '" + country + "' WHERE id = " + id);
         } catch (SQLException e) {
+            // Handle errors for JDBC
             logger.severe("failed to update");
         } catch (Exception e) {
-            logger.severe("something else went wrong");
+            // Handle errors for Class.forName
+            logger.severe("something wrong happened");
         } finally {
-            // close all resources
-
-            // statement
+            // finally block used to close resources
             try {
-                if (statement != null) {
+                if (statement != null)
                     statement.close();
-                }
             } catch (SQLException e) {
                 logger.severe("failed to close statement");
-            }
+            } // do nothing
 
-            // connection
             try {
-                if (connection != null) {
+                if (connection != null)
                     connection.close();
-                }
             } catch (SQLException e) {
                 logger.severe("failed to close connection");
             }
-
         }
     }
 
-    // delete
     public void deleteOperation(int id) {
         try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD);
              Statement statement = connection.createStatement()) {
-
-            int rowsAffected = statement.executeUpdate("DELETE FROM user WHERE id = " + id);
-            logger.info("delete successful: " + rowsAffected + " rows affected");
+            if (statement != null) {
+                // DELETE
+                int rowsAffected = statement.executeUpdate("DELETE FROM user WHERE id = " + id);
+                System.out.println("Delete return: " + (rowsAffected == 1 ? "OK" : "ERROR"));
+            }
         } catch (SQLException e) {
             logger.severe("failed to delete");
         }
