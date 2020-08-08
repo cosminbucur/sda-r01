@@ -4,14 +4,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!--    project metadata-->
     <groupId>com.sda</groupId>
+
+    <!--    project name-->
     <artifactId>sda-r01</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
+    <!--    child modules-->
     <modules>
         <module>jdbc</module>
+        <module>recap</module>
+        <module>hibernate</module>
     </modules>
 
+    <!--    plugin for setting java version-->
     <build>
         <plugins>
             <plugin>
