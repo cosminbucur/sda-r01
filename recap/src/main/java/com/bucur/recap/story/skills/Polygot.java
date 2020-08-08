@@ -1,6 +1,6 @@
 package com.bucur.recap.story.skills;
 
-public interface Polyglot {
+public interface Polygot {
 
     void speakEnglish();
 
