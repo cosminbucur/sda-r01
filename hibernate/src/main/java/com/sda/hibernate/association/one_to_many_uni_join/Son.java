@@ -1,4 +1,4 @@
-package com.sda.hibernate.association.one_to_many_uni;
+package com.sda.hibernate.association.one_to_many_uni_join;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -7,9 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity(name = "Daughter")
-@Table(name = "daughter")
-public class Daughter {
+@Entity(name = "Son")
+@Table(name = "son")
+public class Son {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,7 +19,7 @@ public class Daughter {
     @Column(name = "title")
     private String title;
 
-    public Daughter() {
+    public Son() {
     }
 
     public Long getId() {

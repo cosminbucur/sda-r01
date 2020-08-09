@@ -1,10 +1,20 @@
 package com.sda.hibernate.config;
 
+import com.sda.hibernate.association.many_to_many.Post;
+import com.sda.hibernate.association.many_to_many.Tag;
+import com.sda.hibernate.association.one_to_many_bi.Child;
+import com.sda.hibernate.association.one_to_many_bi.Parent;
 import com.sda.hibernate.association.one_to_many_uni.Daughter;
 import com.sda.hibernate.association.one_to_many_uni.Mother;
+import com.sda.hibernate.association.one_to_many_uni_join.Father;
+import com.sda.hibernate.association.one_to_many_uni_join.Son;
 import com.sda.hibernate.association.one_to_one.Account;
 import com.sda.hibernate.association.one_to_one.Employee;
+import com.sda.hibernate.criteria.Country;
+import com.sda.hibernate.criteria.Traveler;
 import com.sda.hibernate.crud.Person;
+import com.sda.hibernate.queries.hql.Stock;
+import com.sda.hibernate.queries.native_query.Trader;
 import com.sda.hibernate.types.Player;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -53,16 +63,31 @@ public class HibernateUtil {
         configuration.setProperties(settings);
 
         // add annotated classes
-//        configuration.addAnnotatedClass(Person.class);
-//
-//        configuration.addAnnotatedClass(Player.class);
+        configuration.addAnnotatedClass(Person.class);
 
-        // one to one
-//        configuration.addAnnotatedClass(Account.class);
-//        configuration.addAnnotatedClass(Employee.class);
+        configuration.addAnnotatedClass(Player.class);
+
+        configuration.addAnnotatedClass(Account.class);
+        configuration.addAnnotatedClass(Employee.class);
 
         configuration.addAnnotatedClass(Mother.class);
         configuration.addAnnotatedClass(Daughter.class);
+
+        configuration.addAnnotatedClass(Father.class);
+        configuration.addAnnotatedClass(Son.class);
+
+        configuration.addAnnotatedClass(Parent.class);
+        configuration.addAnnotatedClass(Child.class);
+
+        configuration.addAnnotatedClass(Tag.class);
+        configuration.addAnnotatedClass(Post.class);
+
+        configuration.addAnnotatedClass(Stock.class);
+
+        configuration.addAnnotatedClass(Trader.class);
+
+        configuration.addAnnotatedClass(Traveler.class);
+        configuration.addAnnotatedClass(Country.class);
 
         return configuration;
     }

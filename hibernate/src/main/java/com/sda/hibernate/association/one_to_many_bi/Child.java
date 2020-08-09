@@ -1,15 +1,18 @@
-package com.sda.hibernate.association.one_to_many_uni;
+package com.sda.hibernate.association.one_to_many_bi;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-@Entity(name = "Daughter")
-@Table(name = "daughter")
-public class Daughter {
+@Entity(name = "Child")
+@Table(name = "child")
+public class Child {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,7 +22,11 @@ public class Daughter {
     @Column(name = "title")
     private String title;
 
-    public Daughter() {
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Parent parent;
+
+    public Child() {
     }
 
     public Long getId() {
@@ -36,5 +43,13 @@ public class Daughter {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public Parent getParent() {
+        return parent;
+    }
+
+    public void setParent(Parent parent) {
+        this.parent = parent;
     }
 }
