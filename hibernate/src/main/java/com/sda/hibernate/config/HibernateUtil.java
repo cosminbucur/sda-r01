@@ -54,7 +54,7 @@ public class HibernateUtil {
         settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
         settings.put(Environment.URL, "jdbc:mysql://localhost:3306/hibernate?serverTimezone=UTC");
         settings.put(Environment.USER, "root");
-        settings.put(Environment.PASS, "Rootpass3#");
+        settings.put(Environment.PASS, "root");
         settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL8Dialect");
         settings.put(Environment.SHOW_SQL, "true");
         settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
@@ -65,27 +65,34 @@ public class HibernateUtil {
         // add annotated classes
         configuration.addAnnotatedClass(Person.class);
 
+        // hibernate types
         configuration.addAnnotatedClass(Player.class);
 
-        configuration.addAnnotatedClass(Account.class);
+        // one to one
         configuration.addAnnotatedClass(Employee.class);
+        configuration.addAnnotatedClass(Account.class);
 
-        configuration.addAnnotatedClass(Mother.class);
+        // one to many unidirectional
         configuration.addAnnotatedClass(Daughter.class);
+        configuration.addAnnotatedClass(Mother.class);
 
+        // one to many unidirectional join
         configuration.addAnnotatedClass(Father.class);
         configuration.addAnnotatedClass(Son.class);
 
+        // one to many bidirectional
         configuration.addAnnotatedClass(Parent.class);
         configuration.addAnnotatedClass(Child.class);
 
-        configuration.addAnnotatedClass(Tag.class);
+        // many to many
         configuration.addAnnotatedClass(Post.class);
+        configuration.addAnnotatedClass(Tag.class);
 
+        // hql
         configuration.addAnnotatedClass(Stock.class);
-
         configuration.addAnnotatedClass(Trader.class);
 
+        // criteria
         configuration.addAnnotatedClass(Traveler.class);
         configuration.addAnnotatedClass(Country.class);
 
