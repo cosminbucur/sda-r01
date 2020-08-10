@@ -24,8 +24,5 @@ public class DemoOneToManyBidirectional {
         // save parent
         ParentDao parentDao = new ParentDao();
         parentDao.create(parent);
-
-        Parent savedParent = parentDao.findById(1L);
-        Child firstChild = savedParent.getChildren().get(0);
     }
 }

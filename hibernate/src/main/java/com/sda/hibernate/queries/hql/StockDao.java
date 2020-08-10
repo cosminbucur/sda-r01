@@ -30,7 +30,6 @@ public class StockDao {
         }
     }
 
-    // find all
     public List findAllWithHqlQuery() {
         List result = new ArrayList();
         try {
