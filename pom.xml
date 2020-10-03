@@ -17,6 +17,9 @@
         <module>jdbc</module>
         <module>recap</module>
         <module>hibernate</module>
+        <module>spring-core</module>
+        <module>parent-boot-2</module>
+        <module>spring-boot</module>
     </modules>
 
     <!--    plugin for setting java version-->
