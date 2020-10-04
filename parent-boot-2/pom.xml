@@ -55,6 +55,6 @@
 
     <properties>
         <!-- plugins -->
-        <spring-boot.version>2.2.0.RELEASE</spring-boot.version>
+        <spring-boot.version>2.3.4.RELEASE</spring-boot.version>
     </properties>
 </project>

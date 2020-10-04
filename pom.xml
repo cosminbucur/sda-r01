@@ -20,6 +20,7 @@
         <module>spring-core</module>
         <module>parent-boot-2</module>
         <module>spring-boot</module>
+        <module>spring-data-jpa</module>
     </modules>
 
     <!--    plugin for setting java version-->

@@ -2,7 +2,7 @@ package com.sda.spring.boot.editor;
 
 import org.springframework.stereotype.Component;
 
-//@Component
+@Component
 public class SillySpellChecker implements SpellChecker {
 
     @Override

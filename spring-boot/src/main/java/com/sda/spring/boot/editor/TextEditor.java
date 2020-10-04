@@ -1,6 +1,7 @@
 package com.sda.spring.boot.editor;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,7 +12,10 @@ public class TextEditor {
     private ImageConverter imageConverter;
 
     @Autowired
-    public TextEditor(SpellChecker spellChecker, TextFormatter textFormatter, ImageConverter imageConverter) {
+    public TextEditor(
+        @Qualifier("coolSpellChecker") SpellChecker spellChecker,
+        TextFormatter textFormatter,
+        ImageConverter imageConverter) {
         this.spellChecker = spellChecker;
         this.textFormatter = textFormatter;
         this.imageConverter = imageConverter;
