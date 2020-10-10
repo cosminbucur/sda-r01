@@ -21,6 +21,9 @@
         <module>parent-boot-2</module>
         <module>spring-boot</module>
         <module>spring-data-jpa</module>
+        <module>spring-mvc</module>
+        <module>spring-boot-jsp</module>
+        <module>spring-mvc-hibernate</module>
     </modules>
 
     <!--    plugin for setting java version-->
