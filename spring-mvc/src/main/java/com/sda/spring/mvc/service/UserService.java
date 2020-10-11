@@ -1,6 +1,6 @@
 package com.sda.spring.mvc.service;
 
-import com.sda.spring.mvc.dao.UserRepository;
+import com.sda.spring.mvc.repository.UserRepository;
 import com.sda.spring.mvc.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,12 @@ public class UserService {
     // get users from database
     public List<User> findAll() {
         // convert user to dto
-
+        System.out.println("in find all");
         return userRepository.findAll();
+    }
+
+    public void save(User user) {
+        System.out.println("in save");
+//        userRepository.save(user);
     }
 }

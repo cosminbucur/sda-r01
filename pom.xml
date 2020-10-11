@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <!--    project metadata-->
+    <!-- project metadata -->
     <groupId>com.sda</groupId>
 
-    <!--    project name-->
+    <!-- project name -->
     <artifactId>sda-r01</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
@@ -24,9 +24,15 @@
         <module>spring-mvc</module>
         <module>spring-boot-jsp</module>
         <module>spring-mvc-hibernate</module>
+        <module>spring-mvc-xml</module>
+        <module>spring-thymeleaf</module>
     </modules>
 
-    <!--    plugin for setting java version-->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <!-- plugin for setting java version -->
     <build>
         <plugins>
             <plugin>

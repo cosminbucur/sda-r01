@@ -10,6 +10,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
@@ -17,12 +18,22 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 import java.util.Properties;
 
-@EnableJpaRepositories({})
+import static com.sda.spring.mvc.hibernate.config.PersistenceJpaConfig.*;
+
+@EnableJpaRepositories(basePackages = REPOSITORY_PACKAGE)
+// allow the transaction manager to rollback transactions
 @EnableTransactionManagement
-@ComponentScan({})
-@PropertySource({"classpath:persistence-h2.properties"})
+// scan spring components
+@ComponentScan(COMPONENT_PACKAGE)
+// load properties from resources
+@PropertySource({PERSISTENCE_PROPERTIES})
 @Configuration
 public class PersistenceJpaConfig {
+
+    public static final String COMPONENT_PACKAGE = "com.sda.spring.mvc.hibernate";
+    public static final String REPOSITORY_PACKAGE = "com.sda.spring.mvc.hibernate.repository";
+    public static final String MODEL_PACKAGE = "com.sda.spring.mvc.hibernate.model";
+    public static final String PERSISTENCE_PROPERTIES = "classpath:persistence-h2.properties";
 
     @Autowired
     public Environment env;
@@ -43,7 +54,11 @@ public class PersistenceJpaConfig {
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
         LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
         entityManager.setDataSource(dataSource());
-        entityManager.setJpaProperties(additionalProperties());
+        entityManager.setPackagesToScan(MODEL_PACKAGE);
+
+        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        entityManager.setJpaVendorAdapter(vendorAdapter);
+        entityManager.setJpaProperties(hibernateProperties());
         return entityManager;
     }
 
@@ -56,7 +71,7 @@ public class PersistenceJpaConfig {
         return transactionManager;
     }
 
-    private Properties additionalProperties() {
+    private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.dialect", env.getProperty("hibernate.dialect"));
         hibernateProperties.setProperty("hibernate.show_sql", env.getProperty("hibernate.show_sql"));

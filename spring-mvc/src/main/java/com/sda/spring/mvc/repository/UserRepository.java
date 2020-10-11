@@ -1,6 +1,7 @@
-package com.sda.spring.mvc.dao;
+package com.sda.spring.mvc.repository;
 
 import com.sda.spring.mvc.model.User;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -26,5 +27,13 @@ public class UserRepository {
 
         // execute
         return query.getResultList();
+    }
+
+    public void save(User user) {
+        try (Session session = sessionFactory.openSession()) {
+            session.save(user);
+        } catch (HibernateException e) {
+            System.out.println("nasty");
+        }
     }
 }
