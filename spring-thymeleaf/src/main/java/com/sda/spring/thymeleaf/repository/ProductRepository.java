@@ -12,5 +12,7 @@ import java.util.List;
 @Repository
 public interface ProductRepository extends CrudRepository<Product, Long> {
 
+    // derived query
     List<Product> findAll();
+
 }

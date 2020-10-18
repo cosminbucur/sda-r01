@@ -26,6 +26,7 @@
         <module>spring-mvc-hibernate</module>
         <module>spring-mvc-xml</module>
         <module>spring-thymeleaf</module>
+        <module>spring-security</module>
     </modules>
 
     <properties>
