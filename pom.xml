@@ -27,6 +27,7 @@
         <module>spring-mvc-xml</module>
         <module>spring-thymeleaf</module>
         <module>spring-security</module>
+        <module>spring-boot-rest</module>
     </modules>
 
     <properties>
