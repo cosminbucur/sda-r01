@@ -55,11 +55,13 @@ public class BookService {
         return bookMapper.toDto(book);
     }
 
-    // find by author
-    public List<BookResponse> findByAuthor(String author) {
-        // TODO: var1: implement method in repository
+    // TODO: find by author using derived query
 
-        // var2: find all and filter
+    // TODO: find by author using native query
+
+    // find by author using filter
+    public List<BookResponse> findByAuthor(String author) {
+        // find all and filter
         return bookRepository.findAll()                      // List<Book>
             .stream()                                        // Stream<Book>
             .filter(book -> book.getAuthor().equals(author)) // Stream<Book>
@@ -67,15 +69,43 @@ public class BookService {
             .collect(Collectors.toList());                   // List<BookResponse>
     }
 
-    // update
-    public void update(BookRequest bookRequest, long id) {
+    // update - boring version
+    public BookResponse updateOld(Long id, BookRequest bookRequest) {
+        // find book to update
         Book bookToUpdate = bookRepository.findById(id)
             .orElseThrow(() -> new RuntimeException("book not found"));
 
         // update book details
-        bookMapper.map(bookRequest, bookToUpdate);
+        bookMapper.toEntity(bookToUpdate, bookRequest);
 
-        bookRepository.save(bookToUpdate);
+        // save in db
+        Book book = bookRepository.save(bookToUpdate);
+
+        // convert to dto
+        BookResponse bookResponse = bookMapper.toDto(book);
+        return bookResponse;
+    }
+
+    // update - medium version
+    public BookResponse update2(Long id, BookRequest bookRequest) {
+        // only if find returns optional
+        return bookRepository.findById(id)
+            // convert a book into an updated book
+            .map(book -> bookMapper.toEntity(book, bookRequest))    // updated book
+            // save to db
+            .map(book -> bookRepository.save(book))     // saved book
+            // to dto
+            .map(book -> bookMapper.toDto(book))
+            .orElseThrow(() -> new RuntimeException("book not found"));
+    }
+
+    // update - short version
+    public BookResponse update(Long id, BookRequest bookRequest) {
+        return bookRepository.findById(id)
+            .map(book -> bookMapper.toEntity(book, bookRequest))
+            .map(bookRepository::save)
+            .map(bookMapper::toDto)
+            .orElseThrow(() -> new RuntimeException("book not found"));
     }
 
     // delete

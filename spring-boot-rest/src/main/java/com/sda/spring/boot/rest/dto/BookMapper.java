@@ -14,6 +14,13 @@ public class BookMapper {
         return entity;
     }
 
+    public Book toEntity(Book bookToUpdate, BookRequest updateRequest) {
+        bookToUpdate.setTitle(updateRequest.getTitle());
+        bookToUpdate.setAuthor(updateRequest.getAuthor());
+        bookToUpdate.setPublished(updateRequest.getPublished());
+        return bookToUpdate;
+    }
+
     public BookResponse toDto(Book entity) {
         BookResponse dto = new BookResponse();
         dto.setId(entity.getId());
@@ -21,11 +28,5 @@ public class BookMapper {
         dto.setAuthor(entity.getAuthor());
         dto.setPublished(entity.getPublished());
         return dto;
-    }
-
-    public void map(BookRequest dto, Book entity) {
-        entity.setTitle(dto.getTitle());
-        entity.setAuthor(dto.getAuthor());
-        entity.setPublished(dto.getPublished());
     }
 }
