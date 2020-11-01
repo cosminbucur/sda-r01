@@ -4,7 +4,7 @@ server:
 jdbc:
   url: jdbc:mysql://localhost:3306/bookapp
   username: root
-  password: Rootpass3#
+  password: root
   driver-class-name: com.mysql.cj.jdbc.Driver
 
 hibernate:
