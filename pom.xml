@@ -28,6 +28,7 @@
         <module>spring-thymeleaf</module>
         <module>spring-security</module>
         <module>spring-boot-rest</module>
+        <module>testing-advanced</module>
     </modules>
 
     <properties>
